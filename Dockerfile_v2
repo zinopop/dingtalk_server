@@ -8,7 +8,7 @@ ENV GO111MODULE=on
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-
+ENV TZ=Asia/Shanghai
 
 #编译gf-cli工具
 WORKDIR /go/gf-cli
@@ -26,6 +26,6 @@ WORKDIR /go/release
 
 ADD . .
 
-RUN /go/gf-cli/gf run main.go
+ENTRYPOINT /go/gf-cli/gf run main.go
 
 
