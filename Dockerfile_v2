@@ -1,0 +1,33 @@
+FROM golang:1.15 as builder
+# 配置代理
+ENV GOPROXY https://goproxy.cn
+# 设置go缓存
+ENV GO111MODULE=on
+
+# 设置编码格式
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+
+#编译gf-cli工具
+WORKDIR /go/gf-cli
+ADD gf-cli .
+RUN go mod download
+RUN go build -o gf main.go
+
+# go缓存
+WORKDIR /go/cache
+ADD go.mod .
+ADD go.sum .
+RUN go mod download
+# 项目工作路径
+WORKDIR /go/release
+
+ADD . .
+
+#RUN /go/gf-cli/gf version
+
+RUN /go/gf-cli/gf run main.go
+
+
