@@ -26,6 +26,6 @@ WORKDIR /go/release
 
 ADD . .
 
-ENTRYPOINT /go/gf-cli/gf run main.go
+RUN /go/gf-cli/gf run main.go
 
 
