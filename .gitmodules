@@ -1,0 +1,3 @@
+[submodule "gf-cli"]
+	path = gf-cli
+	url = https://github.com/gogf/gf-cli.git
