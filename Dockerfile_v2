@@ -28,6 +28,6 @@ ADD . .
 
 #RUN /go/gf-cli/gf version
 
-RUN /go/gf-cli/gf run main.go
+ENTRYPOINT /go/gf-cli/gf run main.go
 
 
