@@ -28,10 +28,11 @@
         Stdout = true
 #钉钉
 [dingTalk]
-    [default]
+    [dingTalk.default]
         sendUrl     = "https://oapi.dingtalk.com/robot/send"
         accessToken = "f06c463c2c4be4e2a3ce9bc7705cbcf3cabbf7a6e4b4587ccb4814fefd8c2f50"
         secret      = "SEC6b2e548aa7dcd97a115046926c5409f7bb8b6f0b35091c391cd692cc8de8c787"
-    [wolf]
+    [dingTalk.wolf]
         sendUrl     = "https://oapi.dingtalk.com/robot/send"
         accessToken = "b6db62de240ddfae4ea9dc8d7d3c06484fa770d5d61462f7d5cb250a53d19b6b"
+        secret      = "SEC4136f8310e4eae3645e384e3545a02fc0677cb8106cac3e79d5188727c6fba89"

@@ -2,7 +2,6 @@ package helper
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gogf/gf/os/gcfg"
 	"io/ioutil"
 	"net/http"
@@ -24,22 +23,22 @@ type MsgContext struct {
 }
 
 //
-func urlBuild() string {
-	dingUrl := gcfg.Instance().GetString("dingTalk.default.sendUrl") + "?access_token=" + gcfg.Instance().GetString("dingTalk.default.accessToken") + "&timestamp="
+func urlBuild(names string) string {
+	dingUrl := gcfg.Instance().GetString("dingTalk."+names+".sendUrl") + "?access_token=" + gcfg.Instance().GetString("dingTalk."+names+".accessToken") + "&timestamp="
 	timestamp := time.Now().UnixNano() / 1e6
 	timestampString := strconv.FormatInt(timestamp, 10)
 	dingUrl += timestampString
-	sign := timestampString + "\n" + gcfg.Instance().GetString("dingTalk.default.secret")
-	sign = ComputeHmacSha256(sign, gcfg.Instance().GetString("dingTalk.default.secret"))
+	sign := timestampString + "\n" + gcfg.Instance().GetString("dingTalk."+names+".secret")
+	sign = ComputeHmacSha256(sign, gcfg.Instance().GetString("dingTalk."+names+".secret"))
 	sign = url.QueryEscape(sign)
 	dingUrl += "&sign=" + sign
 	return dingUrl
 }
 
-func SendDingMsg(msg string) (string, error) {
-	req, err := http.NewRequest("POST", urlBuild(), strings.NewReader(msg))
+func SendDingMsg(msg string, names string) (string, error) {
+	req, err := http.NewRequest("POST", urlBuild(names), strings.NewReader(msg))
 	if err != nil {
-		return "请求错误1", err
+		return "生成url失败", err
 	}
 	client := &http.Client{}
 	//设置请求头
@@ -48,7 +47,7 @@ func SendDingMsg(msg string) (string, error) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		return "请求错误2", err
+		return "请求外部出现错误", err
 	}
 	//关闭请求
 	defer resp.Body.Close()
@@ -59,13 +58,9 @@ func SendDingMsg(msg string) (string, error) {
 	return string(body), nil
 }
 
-func ContextPush(msg string) []byte {
+func ContextHandle(msg string) ([]byte, error) {
 	re := &MsgContext{}
 	re.Text.Content = msg
 	re.Msgtype = "text"
-	jsonBytes, err := json.Marshal(&re)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return jsonBytes
+	return json.Marshal(&re)
 }
