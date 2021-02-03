@@ -30,6 +30,20 @@ func (c *rebotApi) Send(r *ghttp.Request) {
 
 }
 
+//钉钉接收消息
 func (c *rebotApi) Receive(r *ghttp.Request) {
-	helper.Json(r, 200, "成功")
+	var apiReq *model.DingRobotReceiveApiReq
+
+	if err := r.Parse(&apiReq); err != nil {
+		helper.JsonExit(r, 500, "失败", err.Error())
+	}
+	data, err := ding.Robot.Send(&model.DingRobotServiceSendReq{
+		RobotName: "wolf",
+		MsgType:   "text",
+		Content:   "测试",
+	})
+	if err != nil {
+		helper.JsonExit(r, 500, "失败", err.Error())
+	}
+	helper.Json(r, 200, "成功", data)
 }
