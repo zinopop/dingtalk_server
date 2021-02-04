@@ -4,6 +4,8 @@ import (
 	"dingtalk_server/app/model"
 	"dingtalk_server/app/service/ding"
 	"dingtalk_server/helper"
+	"dingtalk_server/helper/tuling"
+	"github.com/gogf/gf/encoding/gjson"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 )
@@ -32,15 +34,25 @@ func (c *rebotApi) Send(r *ghttp.Request) {
 
 //钉钉接收消息
 func (c *rebotApi) Receive(r *ghttp.Request) {
-	var apiReq *model.DingRobotReceiveApiReq
 
+	var apiReq *model.DingRobotReceiveApiReq
 	if err := r.Parse(&apiReq); err != nil {
 		helper.JsonExit(r, 500, "失败", err.Error())
 	}
+	re, err := tuling.Send(apiReq.Text.Content, "default")
+	if err != nil {
+		helper.JsonExit(r, 500, "图灵请求失败", err.Error())
+	}
+	j, err := gjson.DecodeToJson(re)
+	if err != nil {
+		helper.JsonExit(r, 500, "图灵请求返回数据解析失败", err.Error())
+	}
+	restring := j.GetString("results.0.values.text")
+
 	data, err := ding.Robot.Send(&model.DingRobotServiceSendReq{
 		RobotName: "wolf",
 		MsgType:   "text",
-		Content:   "测试",
+		Content:   restring,
 	})
 	if err != nil {
 		helper.JsonExit(r, 500, "失败", err.Error())

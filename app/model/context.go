@@ -40,3 +40,28 @@ type atUsers struct {
 	DingtalkID string `p:"dingtalkId"`
 	StaffID    string `p:"staffId"`
 }
+
+//=====================================
+//图灵入参
+type TuLingReq struct {
+	Perception struct {
+		InputImage struct {
+			URL string `json:"url"`
+		} `json:"inputImage"`
+		InputText struct {
+			Text string `json:"text"`
+		} `json:"inputText"`
+		SelfInfo struct {
+			Location struct {
+				City     string `json:"city"`
+				Province string `json:"province"`
+				Street   string `json:"street"`
+			} `json:"location"`
+		} `json:"selfInfo"`
+	} `json:"perception"`
+	ReqType  int64 `json:"reqType"`
+	UserInfo struct {
+		APIKey string `json:"apiKey"`
+		UserID string `json:"userId"`
+	} `json:"userInfo"`
+}
