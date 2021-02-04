@@ -1,6 +1,7 @@
-package helper
+package ding
 
 import (
+	"dingtalk_server/helper"
 	"encoding/json"
 	"github.com/gogf/gf/os/gcfg"
 	"io/ioutil"
@@ -29,7 +30,7 @@ func urlBuild(names string) string {
 	timestampString := strconv.FormatInt(timestamp, 10)
 	dingUrl += timestampString
 	sign := timestampString + "\n" + gcfg.Instance().GetString("dingTalk."+names+".secret")
-	sign = ComputeHmacSha256(sign, gcfg.Instance().GetString("dingTalk."+names+".secret"))
+	sign = helper.ComputeHmacSha256(sign, gcfg.Instance().GetString("dingTalk."+names+".secret"))
 	sign = url.QueryEscape(sign)
 	dingUrl += "&sign=" + sign
 	return dingUrl
