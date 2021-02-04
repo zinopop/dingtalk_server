@@ -2,7 +2,7 @@ package ding
 
 import (
 	"dingtalk_server/app/model"
-	"dingtalk_server/helper"
+	"dingtalk_server/helper/ding"
 	"github.com/gogf/gf/errors/gerror"
 )
 
@@ -15,7 +15,7 @@ func (s *robotService) Send(m *model.DingRobotServiceSendReq) (string, error) {
 	//消息处理
 	switch m.MsgType {
 	case "text":
-		data, err := helper.ContextHandle(m.Content)
+		data, err := ding.ContextHandle(m.Content)
 		if err != nil {
 			return "失败", err
 		}
@@ -26,5 +26,5 @@ func (s *robotService) Send(m *model.DingRobotServiceSendReq) (string, error) {
 
 	}
 	// todo 机器人名称合法性判断
-	return helper.SendDingMsg(string(contextByte), m.RobotName)
+	return ding.SendDingMsg(string(contextByte), m.RobotName)
 }
