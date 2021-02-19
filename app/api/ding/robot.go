@@ -5,13 +5,16 @@ import (
 	"dingtalk_server/app/service/ding"
 	"dingtalk_server/helper"
 	"dingtalk_server/helper/tuling"
+
 	"github.com/gogf/gf/encoding/gjson"
 	"github.com/gogf/gf/net/ghttp"
 	"github.com/gogf/gf/util/gconv"
 )
 
+// Robot 测试
 var Robot = new(rebotApi)
 
+// rebotApi 测试
 type rebotApi struct{}
 
 //webhook发送
