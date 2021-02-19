@@ -3,13 +3,14 @@ package ding
 import (
 	"dingtalk_server/helper"
 	"encoding/json"
-	"github.com/gogf/gf/os/gcfg"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gogf/gf/os/gcfg"
 )
 
 type MsgContext struct {
