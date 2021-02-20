@@ -1,7 +1,7 @@
 # HTTP Server
 [server]
 	Address     = ":8199"
-	ServerRoot  = "public"
+	#ServerRoot  = "public"
 	ServerAgent = "gf-app"
 	LogPath     = "/tmp/log/gf-app/server"
 
@@ -12,10 +12,10 @@
     Stdout      = true
 
 # Template.
-[viewer]
-    Path        = "template"
-    DefaultFile = "index.html"
-    Delimiters  =  ["${", "}"]
+#[viewer]
+#    Path        = "template"
+#    DefaultFile = "index.html"
+#    Delimiters  =  ["${", "}"]
 
 # Database.
 [database]
