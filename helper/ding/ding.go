@@ -62,7 +62,7 @@ func SendDingMsg(msg string, names string) (string, error) {
 
 func ContextHandle(msg string) ([]byte, error) {
 	re := &MsgContext{}
-	re.Text.Content = msg
+	re.Text.Content = "【服务器当前时间】" + time.Now().Format("2006-01-02 15:04:05") + "\n" + msg
 	re.Msgtype = "text"
 	return json.Marshal(&re)
 }
