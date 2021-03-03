@@ -14,7 +14,7 @@ import (
 // Robot 测试
 var Robot = new(rebotApi)
 
-// rebotApi 测试
+// rebotApi 测试/
 type rebotApi struct{}
 
 //webhook发送
